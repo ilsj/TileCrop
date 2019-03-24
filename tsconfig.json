@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "allowJs": false,
+        "target": "es6",
+        "newLine": "lf",
+    },
+    "include": [
+        "./**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
