@@ -18,7 +18,9 @@ export class Tile {
     private _material: ITHREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({
         // color: 0xFF0000,
         map: Tile._texture0,
+        opacity: 0.5,
         side: THREE.DoubleSide,
+        transparent: true,
     });
 
     private _offset: number = 0.01;
@@ -32,15 +34,25 @@ export class Tile {
         this.mesh = new THREE.Mesh(geometry, this._material);
         this.mesh.position.z = this._offset;
 
-        DebugUI.addButton('Texture 0', () => this._material.map = Tile._texture0);
-        DebugUI.addButton('Texture 1', () => this._material.map = Tile._texture1);
-        DebugUI.addButton('Texture 2', () => this._material.map = Tile._texture2);
-        DebugUI.addButton('Texture 3', () => this._material.map = Tile._texture3);
-        DebugUI.addButton('Texture 4', () => this._material.map = Tile._texture4);
+         // This only for understanding the task
+        DebugUI.addLabel('Tiles opacity');
+        DebugUI.addRange(50, (value: string) => this._material.opacity = Number(value) / 100 || 0);
+
+        DebugUI.addButton('Texture 0', () => this._setTexture(Tile._texture0));
+        DebugUI.addButton('Texture 1', () => this._setTexture(Tile._texture1));
+        DebugUI.addButton('Texture 2', () => this._setTexture(Tile._texture2));
+        DebugUI.addButton('Texture 3', () => this._setTexture(Tile._texture3));
+        DebugUI.addButton('Texture 4', () => this._setTexture(Tile._texture4));
         DebugUI.addDivider();
     }
 
     public clone(): ITHREE.Mesh {
         return this.mesh.clone();
+    }
+
+    private _setTexture(texture: ITHREE.Texture): void {
+        if (this._material.map !== texture) {
+            this._material.map = texture;
+        }
     }
 }

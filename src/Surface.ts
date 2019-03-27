@@ -7,6 +7,7 @@ import { Tiles } from './Tiles.js';
 
 export class Surface {
     public group: ITHREE.Group = new THREE.Group();
+    public mesh: ITHREE.Mesh;
 
     private _tiles: Tiles;
 
@@ -17,7 +18,6 @@ export class Surface {
         color: 0xDDDDDD,
         side: THREE.DoubleSide,
     });
-    private _mesh: ITHREE.Mesh;
 
     public constructor(width: number, height: number) {
         this._width = width;
@@ -36,18 +36,18 @@ export class Surface {
     }
 
     public changeShape(shape: ITHREE.ShapeGeometry): void {
-        this.group.remove(this._mesh);
+        this.group.remove(this.mesh);
 
         this._createSurface(shape);
     }
 
     private _createSurface(shape: ITHREE.ShapeGeometry): void {
-        this._mesh = new THREE.Mesh(shape, this._material);
-        this.group.add(this._mesh);
+        this.mesh = new THREE.Mesh(shape, this._material);
+        this.group.add(this.mesh);
     }
 
     private _createTiles(): void {
-        this._tiles = new Tiles(this._width, this._height);
+        this._tiles = new Tiles(this._width, this._height, this.mesh.geometry);
         this.group.add(this._tiles.group);
     }
 }

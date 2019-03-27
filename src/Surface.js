@@ -22,15 +22,15 @@ export class Surface {
         DebugUI.addDivider();
     }
     changeShape(shape) {
-        this.group.remove(this._mesh);
+        this.group.remove(this.mesh);
         this._createSurface(shape);
     }
     _createSurface(shape) {
-        this._mesh = new THREE.Mesh(shape, this._material);
-        this.group.add(this._mesh);
+        this.mesh = new THREE.Mesh(shape, this._material);
+        this.group.add(this.mesh);
     }
     _createTiles() {
-        this._tiles = new Tiles(this._width, this._height);
+        this._tiles = new Tiles(this._width, this._height, this.mesh.geometry);
         this.group.add(this._tiles.group);
     }
 }
